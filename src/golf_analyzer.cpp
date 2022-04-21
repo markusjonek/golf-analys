@@ -117,11 +117,11 @@ void video_writer(const string& video_path, bool speedup) {
     while (capture.read(frame)) {
         if (frame.empty()) { break; }
         if (p % 2 or !speedup) {
-            if (waitKey(10) == 't') { box.y -= 5; }
-            if (waitKey(10) == 'g') { box.y += 5; }
+            //if (waitKey(10) == 't') { box.y -= 5; }
+            //if (waitKey(10) == 'g') { box.y += 5; }
 
-            cv::line(frame, Point(box.x + box.width - 180, box.y), Point(box.x + box.width + 60, box.y), Scalar(0, 0, 255), 5);
-            cv::line(frame, Point(box.x, box.y + 200), Point(box.x, box.y + box.height - 400), Scalar(0, 0, 255), 5);
+            cv::line(frame, Point(box.x + box.width - 450, box.y), Point(box.x + box.width + 150, box.y), Scalar(0, 0, 255), 5);
+            cv::line(frame, Point(box.x, box.y + 800), Point(box.x, box.y + box.height - 800), Scalar(0, 0, 255), 5);
             writer.write(frame);
             //imshow("golf analyzer", frame);
             //if (waitKey(1) == 'q') { break; }
