@@ -4,8 +4,6 @@ project(golf_analyzer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(OpenCV_DIR "/opt/homebrew/Cellar/opencv")
-
 find_package(OpenCV)
 
 include_directories(include ${OpenCV_INCLUDE_DIRS})

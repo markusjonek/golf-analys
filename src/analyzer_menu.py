@@ -5,7 +5,8 @@ from tkinter import Tk
 Tk().withdraw()
 
 dir_path = "/Users/markusjonek/Documents/golf-analys"
-init_path = dir_path + "/golf_videos" 
+#init_path = dir_path + "/golf_videos" 
+init_path = "/Users/markusjonek/Desktop"
 exe_path = dir_path + "/build_golf/golf_analyzer"
 
 filepath = filedialog.askopenfilename(initialdir=init_path,

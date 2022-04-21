@@ -1,11 +1,8 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <fstream>
 #include <opencv2/dnn.hpp>
 #include <opencv2/dnn/all_layers.hpp>
 #include <string>
-#include <utility>
-#include <typeinfo>
 #include <fstream>
 #include <math.h>
 
