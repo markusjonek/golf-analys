@@ -1,6 +1,7 @@
 
 sed -i '' "s~dir_path =.*~dir_path = \"`pwd`\"~g" ./src/analyzer_menu.py
 sed -i '' "s~string DIR_PATH =.*~string DIR_PATH = \"`pwd`\";~g" ./src/golf_analyzer.cpp
+sed -i '' "s~set(OpenCV_DIR .*~set(OpenCV_DIR \"`pwd`/opencv\")~g" ./src/CMakeLists.txt
 
 rm -rf build_golf
 mkdir build_golf

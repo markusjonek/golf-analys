@@ -80,7 +80,7 @@ void calculate_box_values(Mat &frame, Box_values &box, int avg, int &counter, bo
 }
 
 
-Box_values get_avg_box_values(const string& video, Mat frame, int avg) {
+Box_values get_avg_box_values(const string& video_path, Mat frame, int avg) {
     struct Box_values box{};
         box.x = 0;
         box.y = 0;
@@ -88,7 +88,7 @@ Box_values get_avg_box_values(const string& video, Mat frame, int avg) {
         box.height = 0;
 
     //VideoCapture capture("../golf_data/" + video);
-    VideoCapture capture(video);
+    VideoCapture capture(video_path);
     int counter = 0;
     bool checker = true;
 
@@ -99,11 +99,19 @@ Box_values get_avg_box_values(const string& video, Mat frame, int avg) {
 }
 
 
-void video_display(const string& video, bool speedup) {
+void video_writer(const string& video_path, bool speedup) {
     Mat frame;
     //VideoCapture capture("../golf_data/" + video);
-    VideoCapture capture(video);
-    Box_values box = get_avg_box_values(video, frame, 5);
+    VideoCapture capture(video_path);
+    Box_values box = get_avg_box_values(video_path, frame, 5);
+
+    VideoWriter writer;
+    int codec = VideoWriter::fourcc('m', 'p', '4', 'v');  // select desired codec (must be available at runtime)
+    double fps = 25.0;                          // framerate of the created video stream
+    string filename = DIR_PATH + "/analyzed_swing.mp4";             // name of the output video file
+    //bool isColor = (frame.type() == CV_8UC3);
+    capture >> frame;
+    writer.open(filename, codec, fps, frame.size(), true);
 
     int p = 0;
     while (capture.read(frame)) {
@@ -114,12 +122,10 @@ void video_display(const string& video, bool speedup) {
 
             cv::line(frame, Point(box.x + box.width - 180, box.y), Point(box.x + box.width + 60, box.y), Scalar(0, 0, 255), 5);
             cv::line(frame, Point(box.x, box.y + 200), Point(box.x, box.y + box.height - 400), Scalar(0, 0, 255), 5);
-
-            imshow("golf analyzer", frame);
-            //imwrite(video + "_start.jpg", frame);
-            if (waitKey(10) == 'q') { break; }
-
-            if (p == 0) { waitKey(0); } // vänta på mellanslag för att börja
+            writer.write(frame);
+            //imshow("golf analyzer", frame);
+            //if (waitKey(1) == 'q') { break; }
+            //if (p == 0) { waitKey(0); } // vänta på mellanslag för att börja
 
         }
         p++;
@@ -127,14 +133,16 @@ void video_display(const string& video, bool speedup) {
 }
 
 
+
 int main(int argc, char *argv[]){
     if ('/' == argv[1][0]) {
-        video_display(argv[1],  false);
+        video_writer(argv[1],  false);
     } 
     else {
         string vid = argv[1];
-        video_display("../golf_videos/" + vid,  false);
+        video_writer(DIR_PATH + "/golf_videos/" + vid,  false);
     }
+    system(("open " + DIR_PATH + "/analyzed_swing.mp4").c_str());
     return 0;
 }
 
